@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { name: '', lastname: '', list: [] };
+  }
+
+  handleNameChange(e) {
+    this.setState({ name: e.target.value })
+  }
+
+  handleLastNameChange(e) {
+    this.setState({ lastname: e.target.value })
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    let newList = this.state.list.concat({name: this.state.name, lastname: this.state.lastname});
+    this.setState({name: '', lastname: '', list: newList});
+  }
+
   render() {
     return (
       <div className="container">
@@ -9,16 +28,16 @@ class App extends Component {
             <form>
               <div className="form-group">
                 <label htmlFor="first-name">Nombre</label>
-                <input type="text" className="form-control" name="first-name" />
+                <input type="text" className="form-control" name="first-name" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
               </div>
 
               <div className="form-group">
                 <label htmlFor="last-name">Apellido</label>
-                <input type="text" className="form-control" name="last-name" />
+                <input type="text" className="form-control" name="last-name" value={this.state.lastname} onChange={this.handleLastNameChange.bind(this)} />
               </div>
 
               <div className="action">
-                <button type="submit" className="btn btn-primary">Agregar Invitado</button>
+                <button type="submit" className="btn btn-primary" onClick={this.handleClick.bind(this)}>Agregar Invitado</button>
               </div>
             </form>
 
@@ -30,7 +49,12 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
-
+                {this.state.list.map((n, index) => 
+                  <tr key={'invited' + index}>
+                    <td>{n.name}</td>
+                    <td>{n.lastname}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
