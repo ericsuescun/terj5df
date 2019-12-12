@@ -14,7 +14,7 @@ class App extends Component {
     this.setState({ lastname: e.target.value })
   }
 
-  handleClick(e) {
+  handleSubmit(e) {
     e.preventDefault();
     let newList = this.state.list.concat({name: this.state.name, lastname: this.state.lastname});
     this.setState({name: '', lastname: '', list: newList});
@@ -25,7 +25,7 @@ class App extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3">
-            <form>
+            <form onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
                 <label htmlFor="first-name">Nombre</label>
                 <input type="text" className="form-control" name="first-name" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
@@ -37,7 +37,7 @@ class App extends Component {
               </div>
 
               <div className="action">
-                <button type="submit" className="btn btn-primary" onClick={this.handleClick.bind(this)}>Agregar Invitado</button>
+                <button type="submit" className="btn btn-primary">Agregar Invitado</button>
               </div>
             </form>
 
